@@ -1,6 +1,7 @@
 FROM php:7.4-apache
 COPY ./php/php.ini /usr/local/etc/php/
 COPY ./apache/*.conf /etc/apache2/sites-enabled/
+RUN mkdir /var/www/html/sample_laravel
 
 RUN apt-get update \
   && apt-get install -y libzip-dev zlib1g-dev libpq-dev mariadb-client unzip\
