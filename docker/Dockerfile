@@ -1,11 +1,6 @@
 FROM php:7.4.13-apache
 COPY ./php/php.ini /usr/local/etc/php/
 COPY ./apache/*.conf /etc/apache2/sites-enabled/
-<<<<<<< HEAD
-=======
-COPY ./mysql/init/* /docker-entrypoint-initdb.d/
-RUN mkdir /var/www/html/sample_laravel
->>>>>>> cb83504f63835da42bcc9a7d9a658287b18bb7d5
 
 # パッケージの更新及び必要ソフトのインストール
 RUN apt-get update \

@@ -10,15 +10,9 @@ services:
     volumes:
       - ./htdocs:/var/www/html
 
-<<<<<<< HEAD
   db:
     image: mysql
     container_name: db-host
-=======
-  mysql:
-    image: mysql
-    container_name: mysql-host
->>>>>>> cb83504f63835da42bcc9a7d9a658287b18bb7d5
     environment:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: docker-database
@@ -27,15 +21,9 @@ services:
       TZ: 'Asia/Tokyo'
     command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
     volumes:
-<<<<<<< HEAD
       - ./docker/db/data:/var/lib/mysql
       - ./docker/db/my.cnf:/etc/mysql/conf.d/my.cnf
       - ./docker/db/init:/docker-entrypoint-initdb.d
-=======
-      - ./docker/mysql/data:/var/lib/mysql
-      - ./docker/mysql/my.cnf:/etc/mysql/conf.d/my.cnf
-      - ./docker/mysql/init:/docker-entrypoint-initdb.d
->>>>>>> cb83504f63835da42bcc9a7d9a658287b18bb7d5
     ports:
       - 3306:3306
 
@@ -44,11 +32,7 @@ services:
     image: phpmyadmin/phpmyadmin
     environment:
       - PMA_ARBITRARY=1
-<<<<<<< HEAD
       - PMA_HOSTS=db-host
-=======
-      - PMA_HOSTS=mysql-host
->>>>>>> cb83504f63835da42bcc9a7d9a658287b18bb7d5
       - PMA_USER=root
       - PMA_PASSWORD=root
     ports:
