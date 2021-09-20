@@ -8,10 +8,14 @@ RUN apt-get update \
 && docker-php-ext-install zip pdo_mysql mysqli \
 && docker-php-ext-enable mysqli
 
+# Composer Install
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 ENV COMPOSER_ALLOW_SUPERUSER 1
 ENV COMPOSER_HOME /composer
 ENV PATH $PATH:/composer/vendor/bin
+
+# Node.js Install
+RUN apt-get install -y nodejs npm && npm install n -g && n 14.17.6
 
 WORKDIR /var/www/html
 

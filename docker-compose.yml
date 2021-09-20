@@ -1,18 +1,30 @@
-version: '3'
+# Compose fileのバージョン指定
+version: '3.8'
 
+# 立ち上げるコンテナを記述していく
 services:
+  # ApacheとPHPが動作するコンテナ
   web:
+    # コンテナ名を指定する
     container_name: web
+    # 作成したDockerfileを利用してコンテナをビルドする
     build: ./docker
+    # ポートのマッピングを設定する
+    # 下記の記述だと、localhost:8080とブラウザから指定すると、Apacheの80番ポートに接続される
     ports:
-      - 80:80
-    privileged: true
+      - 8000:80
+    # コンテナとホスト側のディレクトリを同期させる設定
+    # Laravelのソースが入る箇所
     volumes:
       - ./htdocs:/var/www/html
 
+  # MySQLを動かすコンテナ
   db:
+    # DockerHubから現在最新のMySQLの公式イメージをダウンロードしてくる
     image: mysql
+    # コンテナ名を指定
     container_name: db-host
+    # コンテナ内の環境変数を指定。詳細はDockerHubを確認
     environment:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: docker-database
