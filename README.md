@@ -18,6 +18,7 @@ laravel new sample_laravel # sample_laravelの名前は任意で指定して下�
 ```
 
 - Larvelのプロジェクト名を任意の名前にするときは、`000-default.conf`の内容を修正する必要があります
+- ファイルの存在場所は、コンテナ内の`/etc/apache2/sites-enabled/000-default.conf`に存在しています
 
 ```ini
 <VirtualHost *:80>
