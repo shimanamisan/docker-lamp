@@ -12,11 +12,13 @@ services:
     # ポートのマッピングを設定する
     # 下記の記述だと、localhost:8080とブラウザから指定すると、Apacheの80番ポートに接続される
     ports:
-      - 8000:80
+      - 8081:80
     # コンテナとホスト側のディレクトリを同期させる設定
-    # Laravelのソースが入る箇所
     volumes:
+      # Laravelのソースが入る箇所
       - ./htdocs:/var/www/html
+      # apacheの設定ファイルが入っているディレクトリを同期
+      - ./docker/apache:/etc/apache2/sites-available
 
   # MySQLを動かすコンテナ
   db:
@@ -24,6 +26,7 @@ services:
     image: mysql
     # コンテナ名を指定
     container_name: db-host
+    restart: always
     # コンテナ内の環境変数を指定。詳細はDockerHubを確認
     environment:
       MYSQL_ROOT_PASSWORD: root
@@ -31,16 +34,20 @@ services:
       MYSQL_USER: docker
       MYSQL_PASSWORD: docker
       TZ: 'Asia/Tokyo'
+    # 起動時に実行するコマンド
     command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
     volumes:
+      # ホスト側のディレクトリ・ファイルをコンテナ側と同期させる
       - ./docker/db/data:/var/lib/mysql
       - ./docker/db/my.cnf:/etc/mysql/conf.d/my.cnf
       - ./docker/db/init:/docker-entrypoint-initdb.d
     ports:
       - 3306:3306
 
+  # PHPMyadminを動かすコンテナ
   phpmyadmin:
     container_name: phpmyadmin
+    restart: always
     image: phpmyadmin/phpmyadmin
     environment:
       - PMA_ARBITRARY=1
@@ -49,3 +56,6 @@ services:
       - PMA_PASSWORD=root
     ports:
       - 8080:80
+    # 依存関係をMySQLに設定
+    depends_on:
+      - db
