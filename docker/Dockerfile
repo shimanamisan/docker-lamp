@@ -1,12 +1,13 @@
 FROM php:7.4.13-apache
 COPY ./php/php.ini /usr/local/etc/php/
-COPY ./apache/*.conf /etc/apache2/sites-enabled/
+# COPY ./apache/*.conf /etc/apache2/sites-enabled/
 
 # パッケージの更新及び必要ソフトのインストール
 RUN apt-get update \
 && apt-get install -yqq zlib1g-dev libpq-dev mariadb-client unzip libzip-dev zip unzip \
 && docker-php-ext-install zip pdo_mysql mysqli \
-&& docker-php-ext-enable mysqli
+&& docker-php-ext-enable mysqli \
+&& a2enmod proxy_http
 
 # Composer Install
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
