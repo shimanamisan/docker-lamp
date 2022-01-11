@@ -15,6 +15,13 @@ docker-compose exec web bash
 
 # Laravelをインストールする
 laravel new sample_laravel # sample_laravelの名前は任意で指定して下さい
+
+# プロジェクトディレクトリへ移動
+cd sample_laravel
+
+# Webサーバの書き込み権限を与える
+chmod -R 777 storage
+chmod -R 777 bootstrap/cache
 ```
 
 - Larvelのプロジェクト名を任意の名前にするときは、`000-default.conf`の内容を修正する必要があります
