@@ -6,13 +6,13 @@ services:
   # ApacheとPHPが動作するコンテナ
   web:
     # コンテナ名を指定する
-    container_name: web
+    container_name: container_web
     # 作成したDockerfileを利用してコンテナをビルドする
     build: ./docker
     # ポートのマッピングを設定する
     # 下記の記述だと、localhost:8081とブラウザから指定すると、Apacheの80番ポートに接続される
     ports:
-      - 8081:80
+      - 8080:80
     # コンテナとホスト側のディレクトリを同期させる設定
     volumes:
       # Laravelのソースが入る箇所
@@ -21,11 +21,11 @@ services:
       - ./docker/apache:/etc/apache2/sites-available
 
   # MySQLを動かすコンテナ
-  db:
+  database:
     # DockerHubから現在最新のMySQLの公式イメージをダウンロードしてくる
     image: mysql
     # コンテナ名を指定
-    container_name: db-host
+    container_name: container_db
     restart: always
     # コンテナ内の環境変数を指定。詳細はDockerHubを確認
     environment:
@@ -46,16 +46,24 @@ services:
 
   # PHPMyadminを動かすコンテナ
   phpmyadmin:
-    container_name: phpmyadmin
+    container_name: container_phpmyadmin
     restart: always
     image: phpmyadmin/phpmyadmin
     environment:
       - PMA_ARBITRARY=1
-      - PMA_HOSTS=db-host
+      - PMA_HOSTS=database
       - PMA_USER=root
       - PMA_PASSWORD=root
     ports:
-      - 8080:80
+      - 8081:80
     # 依存関係をMySQLに設定
     depends_on:
-      - db
+      - database
+
+  # mailhogのコンテナ
+  mailhog:
+    container_name: container_mailhog
+    image: mailhog/mailhog
+    ports:
+      # 管理画面に接続するポート（違うポート番号にすると管理画面に接続できない） 
+      - 8025:8025

@@ -1,8 +1,8 @@
 # docker-lamp for Laravel
 
-## インストール手順
+# インストール手順
 - 作業はこのプロジェクトのルートディレクトリで行います
-### 新規でLaravelをインストールする場合
+## 新規でLaravelをインストールする場合
 
 - 以下の作業を行い`localhost`でブラウザからアクセスしてLaravel8のトップ画面が出てきたら正しくインストールできています
 
@@ -46,7 +46,7 @@ chmod -R 777 bootstrap/cache
 
 </VirtualHost>
 ```
-### 起動時に作成されるデータベースを任意の名前にする場合
+## 起動時に作成されるデータベースを任意の名前にする場合
 
 - `docker/db/init/ini.sql`を以下のように修正します
 
@@ -54,14 +54,14 @@ chmod -R 777 bootstrap/cache
 CREATE DATABASE IF NOT EXISTS [作成したいデータベース名]
 ```
 
-### .envファイルの設定
+## .envファイルの設定
 
 - データベースへ接続するための設定を行います
 
 ```ini
 DB_CONNECTION=mysql
-# container_name: db-host を指定
-DB_HOST=db-host
+# container_name: container_db を指定
+DB_HOST=container_db
 DB_PORT=3306
 # 初回起動時に作成するDB名を指定
 DB_DATABASE=sample_laravel
@@ -118,7 +118,10 @@ exit;
 exit
 ```
 
-### すでに作成済みのLaravelプロジェクトをGitHubからクローンする場合
+## mailhogの動作確認をする場合
+- 
+
+## すでに作成済みのLaravelプロジェクトをGitHubからクローンする場合
 
 - htdocsディレクトリ配下へ`git clone`を実行して下さい
 - その他、`000-default.conf`や`docker/db/init/ini.sql`を任意の設定値へ修正してコンテナを起動して下さい
