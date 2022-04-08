@@ -1,5 +1,5 @@
 # Compose fileのバージョン指定
-version: '3.8'
+version: "3.8"
 
 # 立ち上げるコンテナを記述していく
 services:
@@ -12,7 +12,7 @@ services:
     # ポートのマッピングを設定する
     # 下記の記述だと、localhost:8081とブラウザから指定すると、Apacheの80番ポートに接続される
     ports:
-      - 8080:80
+      - 8081:80
     # コンテナとホスト側のディレクトリを同期させる設定
     volumes:
       # Laravelのソースが入る箇所
@@ -33,7 +33,7 @@ services:
       MYSQL_DATABASE: docker-database
       MYSQL_USER: docker
       MYSQL_PASSWORD: docker
-      TZ: 'Asia/Tokyo'
+      TZ: "Asia/Tokyo"
     # 起動時に実行するコマンド
     command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
     volumes:
@@ -55,7 +55,7 @@ services:
       - PMA_USER=root
       - PMA_PASSWORD=root
     ports:
-      - 8081:80
+      - 8082:80
     # 依存関係をMySQLに設定
     depends_on:
       - database
@@ -65,5 +65,5 @@ services:
     container_name: container_mailhog
     image: mailhog/mailhog
     ports:
-      # 管理画面に接続するポート（違うポート番号にすると管理画面に接続できない） 
+      # 管理画面に接続するポート（違うポート番号にすると管理画面に接続できない）
       - 8025:8025
