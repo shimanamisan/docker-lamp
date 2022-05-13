@@ -8,6 +8,12 @@ RUN apt-get update \
 && docker-php-ext-install zip pdo_mysql mysqli \
 && docker-php-ext-enable mysqli \
 # mod_rewriteを有効化
+&& a2enmod rewrite \
+# Apacheのプロキシ機能と、httpでのプロキシ機能を有効化
+&& a2enmod proxy && a2enmod proxy_http \
+# Apacheでヘッダーを編集する機能を有効
+&& a2enmod headers \
+# URLを都度置き換える機能を有効化
 && a2enmod rewrite
 
 # Composer Install
