@@ -3,6 +3,13 @@ version: "3.8"
 
 # 立ち上げるコンテナを記述していく
 services:
+  nginx-proxy:
+    image: jwilder/nginx-proxy
+    ports:
+      - 80:80
+    volumes:
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+
   # ApacheとPHPが動作するコンテナ
   web:
     # コンテナ名を指定する
@@ -19,6 +26,8 @@ services:
       - ./htdocs:/var/www/html
       # apacheの設定ファイルが入っているディレクトリを同期
       - ./docker/apache:/etc/apache2/sites-available
+    environment:
+      - VIRTUAL_HOST=test.example.com
 
   # MySQLを動かすコンテナ
   database:
