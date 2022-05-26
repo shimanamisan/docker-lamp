@@ -4,9 +4,9 @@ COPY ./php/php.ini /usr/local/etc/php/
 
 # パッケージの更新及び必要ソフトのインストール
 RUN apt-get update \
-&& apt-get install -yqq zlib1g-dev libpq-dev mariadb-client unzip libzip-dev zip unzip \
-&& docker-php-ext-install zip pdo_mysql mysqli \
-&& docker-php-ext-enable mysqli \
+  && apt-get install -yqq zlib1g-dev libpq-dev mariadb-client unzip libzip-dev zip unzip \
+  && docker-php-ext-install zip pdo_mysql mysqli \
+  && docker-php-ext-enable mysqli
 
 # Composer Install
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer

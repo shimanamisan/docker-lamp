@@ -27,7 +27,7 @@ services:
       # apacheの設定ファイルが入っているディレクトリを同期
       - ./docker/apache:/etc/apache2/sites-available
     environment:
-      - VIRTUAL_HOST=test.example.com
+      - VIRTUAL_HOST=web1.example.com
 
   # MySQLを動かすコンテナ
   database:
