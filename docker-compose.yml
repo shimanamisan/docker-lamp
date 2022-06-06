@@ -13,7 +13,7 @@ services:
   # ApacheとPHPが動作するコンテナ
   web:
     # コンテナ名を指定する
-    container_name: container_web
+    container_name: web-container
     # 作成したDockerfileを利用してコンテナをビルドする
     build: ./docker
     # ポートのマッピングを設定する
@@ -34,7 +34,7 @@ services:
     # DockerHubから現在最新のMySQLの公式イメージをダウンロードしてくる
     image: mysql
     # コンテナ名を指定
-    container_name: container_db
+    container_name: db-container
     restart: always
     # コンテナ内の環境変数を指定。詳細はDockerHubを確認
     environment:
@@ -55,7 +55,7 @@ services:
 
   # PHPMyadminを動かすコンテナ
   phpmyadmin:
-    container_name: container_phpmyadmin
+    container_name: phpmyadmin-container
     restart: always
     image: phpmyadmin/phpmyadmin
     environment:
@@ -71,7 +71,7 @@ services:
 
   # mailhogのコンテナ
   mailhog:
-    container_name: container_mailhog
+    container_name: mailhog-container
     image: mailhog/mailhog
     ports:
       # 管理画面に接続するポート（違うポート番号にすると管理画面に接続できない）
