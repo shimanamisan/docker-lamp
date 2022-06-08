@@ -1,4 +1,5 @@
-FROM php:7.4.13-apache
+# FROM php:7.4.13-apache
+FROM php:apache-bullseye
 COPY ./php/php.ini /usr/local/etc/php/
 # COPY ./apache/*.conf /etc/apache2/sites-enabled/
 
