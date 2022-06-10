@@ -27,6 +27,8 @@ services:
       - ./htdocs:/var/www/html
       # apacheの設定ファイルが入っているディレクトリを同期
       - ./docker/apache:/etc/apache2/sites-available
+      # phpの設定ファイルが入っているディレクトリを同期
+      - ./docker/php/php.ini:/usr/local/etc/php/php.ini
     environment:
       - VIRTUAL_HOST=test.example.com
 
@@ -36,7 +38,6 @@ services:
     image: mysql
     # コンテナ名を指定
     container_name: db-container
-    restart: always
     # コンテナ内の環境変数を指定。詳細はDockerHubを確認
     environment:
       MYSQL_ROOT_PASSWORD: root
@@ -48,14 +49,14 @@ services:
       # ホスト側のディレクトリ・ファイルをコンテナ側と同期させる
       - ./docker/db/data:/var/lib/mysql
       - ./docker/db/my.cnf:/etc/mysql/conf.d/my.cnf
-      - ./docker/db/init:/docker-entrypoint-initdb.d
+      - ./docker/db/sql:/docker-entrypoint-initdb.d
     ports:
       - 3306:3306
 
   # PHPMyadminを動かすコンテナ
   phpmyadmin:
+    # コンテナ名を指定
     container_name: phpmyadmin-container
-    restart: always
     image: phpmyadmin/phpmyadmin
     environment:
       - PMA_ARBITRARY=1
@@ -70,6 +71,7 @@ services:
 
   # mailhogのコンテナ
   mailhog:
+    # コンテナ名を指定
     container_name: mailhog-container
     image: mailhog/mailhog
     ports:
