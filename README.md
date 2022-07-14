@@ -55,4 +55,5 @@ DB_PASSWORD=root
 
 以下の記事で詳細な手順を記載していますので参考にしてください。
 
-<div class="iframely-embed"><div class="iframely-responsive" style="height: 140px; padding-bottom: 0;"><a href="https://testblog.hn-pgtech.com/2021-10-02/" data-iframely-url="//iframely.net/Z1ekjMU?card=small"></a></div></div><script async src="//iframely.net/embed.js" charset="utf-8"></script>
+- [【WSL2】DockerでLaravel開発環境を構築する -Part1-](https://blog.hn-pgtech.com/2021-10-02/)
+- [【WSL2】DockerでLaravel開発環境を構築する -Part2-](https://blog.hn-pgtech.com/2021-10-09/)
