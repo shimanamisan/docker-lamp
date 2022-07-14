@@ -1,0 +1,24 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "PHP XDebug", // デバック構成として表示する名前
+      "type": "php", // 使用するデバッガー
+
+      // launch: デバッグ時にプログラムを起動する
+      // attach: 既に起動しているプログラムにデバッガーをアタッチする
+      "request": "launch", // デバッグ実行のモード
+      "port": 9013, // php.iniのxdebugの設定と合わせる
+      "pathMappings": {
+        // docker上のdocument root: ローカルのdocument root
+        "/var/www/html": "${workspaceRoot}/htdocs" // ${workspaceRoot}: VSCodeで開いたフォルダのパス
+      },
+      "ignore": ["**/vendor/**/*.php"], // デバッグを除外するファイルやディレクトリを指定
+      "xdebugSettings": {
+        "max_children": 128,
+        "max_data": 1024,
+        "max_depth": 10
+      }
+    }
+  ]
+}

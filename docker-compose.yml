@@ -3,10 +3,18 @@ version: "3.8"
 
 # 立ち上げるコンテナを記述していく
 services:
+  nginx-proxy:
+    container_name: nginx-proxy-container
+    image: jwilder/nginx-proxy
+    ports:
+      - 80:80
+    volumes:
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+
   # ApacheとPHPが動作するコンテナ
   web:
     # コンテナ名を指定する
-    container_name: container_web
+    container_name: web-container
     # 作成したDockerfileを利用してコンテナをビルドする
     build: ./docker
     # ポートのマッピングを設定する
@@ -19,14 +27,17 @@ services:
       - ./htdocs:/var/www/html
       # apacheの設定ファイルが入っているディレクトリを同期
       - ./docker/apache:/etc/apache2/sites-available
+      # phpの設定ファイルが入っているディレクトリを同期
+      - ./docker/php/php.ini:/usr/local/etc/php/php.ini
+    environment:
+      - VIRTUAL_HOST=test.example.com
 
   # MySQLを動かすコンテナ
   database:
     # DockerHubから現在最新のMySQLの公式イメージをダウンロードしてくる
     image: mysql
     # コンテナ名を指定
-    container_name: container_db
-    restart: always
+    container_name: db-container
     # コンテナ内の環境変数を指定。詳細はDockerHubを確認
     environment:
       MYSQL_ROOT_PASSWORD: root
@@ -34,20 +45,18 @@ services:
       MYSQL_USER: docker
       MYSQL_PASSWORD: docker
       TZ: "Asia/Tokyo"
-    # 起動時に実行するコマンド
-    command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
     volumes:
       # ホスト側のディレクトリ・ファイルをコンテナ側と同期させる
       - ./docker/db/data:/var/lib/mysql
       - ./docker/db/my.cnf:/etc/mysql/conf.d/my.cnf
-      - ./docker/db/init:/docker-entrypoint-initdb.d
+      - ./docker/db/sql:/docker-entrypoint-initdb.d
     ports:
       - 3306:3306
 
   # PHPMyadminを動かすコンテナ
   phpmyadmin:
-    container_name: container_phpmyadmin
-    restart: always
+    # コンテナ名を指定
+    container_name: phpmyadmin-container
     image: phpmyadmin/phpmyadmin
     environment:
       - PMA_ARBITRARY=1
@@ -62,7 +71,8 @@ services:
 
   # mailhogのコンテナ
   mailhog:
-    container_name: container_mailhog
+    # コンテナ名を指定
+    container_name: mailhog-container
     image: mailhog/mailhog
     ports:
       # 管理画面に接続するポート（違うポート番号にすると管理画面に接続できない）
