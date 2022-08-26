@@ -2,6 +2,12 @@
 
 この開発環境は WSL2 上で動かすことを前提としています。
 
+## 開発環境
+
+- Windows11
+- Docker: v20.10.17, build 100c701
+- Docker Compose: v2.6.0
+
 # インストール手順
 
 作業は WSL2 上の適当作業ディレクトリで行ってください。
@@ -16,39 +22,37 @@ $ git clone git@github.com:shimanamisan/docker-lamp.git
 $ cd docker-lamp
 
 # コンテナを起動するビルド
-$ docker-compose build
+$ docker compose build
 
 # コンテナを起動する
-$ docker-compose up -d
+$ docker compose up -d
 
-# Webサーバのコンテナへシェルで入る
-$ docker-compose exec web bash
+# Laravelのプロジェクトを作成
+$ docker compose exec web laravel new sample_laravel
 
-# Laravelをインストールする
-$ laravel new sample_laravel # sample_laravelの名前は任意で指定して下さい
+# バージョンの確認
+$ docker compose exec web bash -c "cd sample_laravel && php artisan --version"
 
-# プロジェクトディレクトリへ移動
-$ cd sample_laravel
-
-# Webサーバの書き込み権限を与える
-$ chmod -R 777 storage
-$ chmod -R 777 bootstrap/cache
+# Webサーバへの書き込み権限を与える
+$ docker compose exec web bash -c "cd sample_laravel && chmod -R 777 storage"
+$ docker compose exec web bash -c "cd sample_laravel && chmod -R 777 bootstrap/cache"
 ```
 
 # .env ファイルの設定
 
 データベースの接続設定は以下の用に設定します。
 
+.envファイルを編集するにはローカルからでは権限が無いため、[Remote - Containers](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers)を導入してコンテナに接続する必要があります。
+
 ```ini
 DB_CONNECTION=mysql
-# container_name: container_db を指定
-DB_HOST=container_db
+# container_name: db-container を指定
+DB_HOST=db-container
 DB_PORT=3306
 # 初回起動時に作成するDB名を指定
 DB_DATABASE=sample_laravel
 DB_USERNAME=root
-# docker-compose.ymlで指定しているrootユーザーのパスワードを指定
-DB_PASSWORD=root
+DB_PASSWORD=rootpass
 ```
 
 # 参考記事
