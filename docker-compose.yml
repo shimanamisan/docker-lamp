@@ -5,7 +5,7 @@ version: "3.8"
 services:
   nginx-proxy:
     container_name: nginx-proxy-container
-    image: jwilder/nginx-proxy
+    build: ./docker/nginx-proxy
     ports:
       - 80:80
     volumes:
@@ -16,40 +16,24 @@ services:
     # コンテナ名を指定する
     container_name: web-container
     # 作成したDockerfileを利用してコンテナをビルドする
-    build: ./docker
+    build: ./docker/web
     # ポートのマッピングを設定する
     # 下記の記述だと、localhost:8081とブラウザから指定すると、Apacheの80番ポートに接続される
     ports:
       - 8081:80
     # コンテナとホスト側のディレクトリを同期させる設定
     volumes:
-      # Laravelのソースが入る箇所
+      # Laravelのソースが入る箇所を同期
       - ./htdocs:/var/www/html
-      # apacheの設定ファイルが入っているディレクトリを同期
-      - ./docker/apache:/etc/apache2/sites-available
-      # phpの設定ファイルが入っているディレクトリを同期
-      - ./docker/php/php.ini:/usr/local/etc/php/php.ini
-    environment:
-      - VIRTUAL_HOST=test.example.com
 
   # MySQLを動かすコンテナ
   database:
-    # DockerHubから現在最新のMySQLの公式イメージをダウンロードしてくる
-    image: mysql
     # コンテナ名を指定
     container_name: db-container
-    # コンテナ内の環境変数を指定。詳細はDockerHubを確認
-    environment:
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: docker-database
-      MYSQL_USER: docker
-      MYSQL_PASSWORD: docker
-      TZ: "Asia/Tokyo"
+    build: ./docker/mysql
     volumes:
-      # ホスト側のディレクトリ・ファイルをコンテナ側と同期させる
-      - ./docker/db/data:/var/lib/mysql
-      - ./docker/db/my.cnf:/etc/mysql/conf.d/my.cnf
-      - ./docker/db/sql:/docker-entrypoint-initdb.d
+      # ボリュームにマウントしデータを永続化する
+      - db-store:/var/lib/mysql
     ports:
       - 3306:3306
 
@@ -57,12 +41,7 @@ services:
   phpmyadmin:
     # コンテナ名を指定
     container_name: phpmyadmin-container
-    image: phpmyadmin/phpmyadmin
-    environment:
-      - PMA_ARBITRARY=1
-      - PMA_HOSTS=database
-      - PMA_USER=root
-      - PMA_PASSWORD=root
+    build: ./docker/phpMyAdmin
     ports:
       - 8082:80
     # 依存関係をMySQLに設定
@@ -73,7 +52,11 @@ services:
   mailhog:
     # コンテナ名を指定
     container_name: mailhog-container
-    image: mailhog/mailhog
+    build: ./docker/mailhog
     ports:
       # 管理画面に接続するポート（違うポート番号にすると管理画面に接続できない）
       - 8025:8025
+
+# 使用するボリュームを指定
+volumes:
+  db-store:
