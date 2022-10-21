@@ -59,5 +59,8 @@ DB_PASSWORD=rootpass
 
 以下の記事で詳細な手順を記載していますので参考にしてください。
 
-- [【WSL2】DockerでLaravel開発環境を構築する -Part1-](https://blog.hn-pgtech.com/2021-10-02/)
-- [【WSL2】DockerでLaravel開発環境を構築する -Part2-](https://blog.hn-pgtech.com/2021-10-09/)
+### 【WSL2】DockerでLaravel開発環境を構築する -Part1-
+[![【WSL2】DockerでLaravel開発環境を構築する -Part1-](https://user-images.githubusercontent.com/49751604/197087300-d7246b01-7a7d-4085-a787-b6e867df4bef.jpeg)](https://blog.hn-pgtech.com/2021-10-02/)
+
+### 【WSL2】DockerでLaravel開発環境を構築する -Part2-
+[![【WSL2】DockerでLaravel開発環境を構築する -Part2-](https://user-images.githubusercontent.com/49751604/197087300-d7246b01-7a7d-4085-a787-b6e867df4bef.jpeg)](https://blog.hn-pgtech.com/2021-10-09/)
