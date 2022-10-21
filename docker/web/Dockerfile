@@ -35,8 +35,8 @@ ENV PATH $PATH:/composer/vendor/bin
 # Node.js Install
 RUN apt-get install -y nodejs \
   npm \
-  && npm install n -g \ 
-  && n 14.17.6
+  && npm install n -g \
+  && n latest
 
 WORKDIR /var/www/html
 
