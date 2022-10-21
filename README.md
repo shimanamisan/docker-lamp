@@ -21,14 +21,19 @@ $ git clone git@github.com:shimanamisan/docker-lamp.git
 
 $ cd docker-lamp
 
+# コンテナを起動するビルド
 $ docker compose build
 
+# コンテナを起動する
 $ docker compose up -d
 
+# Laravelのプロジェクトを作成
 $ docker compose exec web laravel new sample_laravel
 
+# バージョンの確認
 $ docker compose exec web bash -c "cd sample_laravel && php artisan --version"
 
+# Webサーバへの書き込み権限を与える
 $ docker compose exec web bash -c "cd sample_laravel && chmod -R 777 storage"
 $ docker compose exec web bash -c "cd sample_laravel && chmod -R 777 bootstrap/cache"
 ```
