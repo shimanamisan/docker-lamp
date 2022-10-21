@@ -17,19 +17,25 @@ RUN apt-get update \
   && docker-php-ext-install \
   pdo_mysql \
   mysqli \
+  # rewriteモジュールを有効化
   && a2enmod rewrite \
   && docker-php-ext-enable mysqli \
   # xdebug install
   && pecl install xdebug \
   && docker-php-ext-enable xdebug
 
-# jwilder/nginx-proxyからこのコンテナにルーティングされる様に指定
+# 指定したドメインでコンテナにルーティングされるように設定
+# nginx-proxyに関連した設定
 ENV VIRTUAL_HOST=test.example.com
 
 # Composer Install
+# 公式の Composer イメージを利用
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+# rootユーザー実行した際に警告が出ないようにする
 ENV COMPOSER_ALLOW_SUPERUSER 1
+# Composerのホームディレクトリを変更
 ENV COMPOSER_HOME /composer
+# コマンドが実行できるようにパスを通す
 ENV PATH $PATH:/composer/vendor/bin
 
 # Node.js Install
@@ -37,7 +43,5 @@ RUN apt-get install -y nodejs \
   npm \
   && npm install n -g \
   && n latest
-
-WORKDIR /var/www/html
 
 RUN composer global require "laravel/installer"
