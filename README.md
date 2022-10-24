@@ -44,6 +44,10 @@ $ docker compose exec web bash -c "cd sample_laravel && chmod -R 777 bootstrap/c
 
 .envファイルを編集するにはローカルからでは権限が無いため、[Remote - Containers](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers)を導入してコンテナに接続する必要があります。
 
+## データベース接続に関する設定
+
+マイグレーション実行時に接続するデータベースの設定を行います。
+
 ```ini
 DB_CONNECTION=mysql
 # container_name: db-container を指定
@@ -53,6 +57,31 @@ DB_PORT=3306
 DB_DATABASE=sample_laravel
 DB_USERNAME=root
 DB_PASSWORD=rootpass
+```
+
+実際にコマンドを実行します。
+
+```bash
+# マイグレーションを実行
+$ docker compose exec web bash -c "cd sample_laravel && php artisan migrate"
+
+# ロールバックも実行できるかテストしておく
+$ docker compose exec web bash -c "cd sample_laravel && php artisan migrate:rollback"
+```
+
+## mailhogに関する設定
+
+Laravel9を新規でインストールした場合、デフォルトの`.env`ファイルでmailhogに関する設定は以下のようになっています。テストメールを送信するだけなら設定の変更は必要ありません。
+
+```ini
+MAIL_MAILER=smtp
+MAIL_HOST=mailhog
+MAIL_PORT=1025
+MAIL_USERNAME=null
+MAIL_PASSWORD=null
+MAIL_ENCRYPTION=null
+MAIL_FROM_ADDRESS="hello@example.com"
+MAIL_FROM_NAME="${APP_NAME}"
 ```
 
 # 参考記事
