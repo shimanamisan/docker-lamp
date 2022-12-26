@@ -15,18 +15,20 @@
     "vscode": {
       // 拡張機能などの設定
       "settings": {
-        "phpstan.binPath": "./htdocs/sample_laravel/vendor/bin/phpstan",
-        "php.validate.executablePath": ""
+        "phpstan.binPath": "htdocs/sample_laravel/vendor/bin/phpstan",
+        "php.validate.executablePath": "/usr/local/bin/php"
       },
       // コンテナ内にインストールする拡張機能を指定する
       "extensions": [
-      "xdebug.php-debug",
-      "MehediDracula.php-namespace-resolver",
-      "neilbrayfield.php-docblocker",
-      "SanderRonde.phpstan-vscode",
-      "bmewburn.vscode-intelephense-client",
-      "ms-vscode-remote.remote-wsl"
-      ],
+        "xdebug.php-debug",
+        "MehediDracula.php-namespace-resolver",
+        "neilbrayfield.php-docblocker",
+        "SanderRonde.phpstan-vscode",
+        "bmewburn.vscode-intelephense-client",
+        "ms-vscode-remote.remote-wsl",
+        "ms-azuretools.vscode-docker",
+        "MS-CEINTL.vscode-language-pack-ja"
+      ]
     }
   }
 }
