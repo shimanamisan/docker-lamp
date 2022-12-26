@@ -36,6 +36,9 @@ $ docker compose exec web bash -c "cd sample_laravel && php artisan --version"
 # Webサーバへの書き込み権限を与える
 $ docker compose exec web bash -c "cd sample_laravel && chmod -R 777 storage"
 $ docker compose exec web bash -c "cd sample_laravel && chmod -R 777 bootstrap/cache"
+
+# Larastanをインストール
+$ docker compose exec web bash -c "cd sample_laravel && composer require nunomaduro/larastan --dev"
 ```
 
 # .env ファイルの設定
