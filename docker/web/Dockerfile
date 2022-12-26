@@ -38,9 +38,6 @@ ENV COMPOSER_HOME /composer
 # コマンドが実行できるようにパスを通す
 ENV PATH $PATH:/composer/vendor/bin
 
-# PHPStanをインストール
-RUN composer require phpstan/phpstan --dev
-
 # Laravelインストーラをダウンロード
 RUN composer global require "laravel/installer"
 
