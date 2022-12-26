@@ -38,10 +38,14 @@ ENV COMPOSER_HOME /composer
 # コマンドが実行できるようにパスを通す
 ENV PATH $PATH:/composer/vendor/bin
 
-# Node.js Install
+# PHPStanをインストール
+RUN composer require phpstan/phpstan --dev
+
+# Laravelインストーラをダウンロード
+RUN composer global require "laravel/installer"
+
+# Node.jsをインストール
 RUN apt-get install -y nodejs \
   npm \
   && npm install n -g \
   && n latest
-
-RUN composer global require "laravel/installer"
